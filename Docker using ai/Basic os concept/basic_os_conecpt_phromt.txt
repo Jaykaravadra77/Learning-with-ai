@@ -1,0 +1,182 @@
+=== OS CONCEPTS LEARNING PATH FOR NODE.JS DEVELOPERS ===
+
+1. PROCESS FUNDAMENTALS
+□ What is a Process?
+  - Process vs Program
+  - Process states (New, Ready, Running, Waiting, Terminated)
+  - Process Control Block (PCB)
+  - Process ID (PID)
+  - Parent/Child processes
+
+□ Process Management
+  - Process creation
+  - Process scheduling
+  - Context switching
+  - Process termination
+  - Zombie processes
+  - Daemon processes
+
+2. THREAD BASICS
+□ Understanding Threads
+  - What is a thread?
+  - Thread vs Process
+  - Single-threaded vs Multi-threaded
+  - Thread states
+  - Thread scheduling
+
+□ Node.js & Threading
+  - Event Loop
+  - Single-threaded nature
+  - Worker threads
+  - Libuv thread pool
+  - Blocking vs Non-blocking operations
+
+3. MEMORY MANAGEMENT
+□ Memory Concepts
+  - Stack vs Heap
+  - Memory allocation
+  - Garbage collection
+  - Memory leaks
+  - Virtual memory
+
+□ Node.js Memory
+  - V8 memory structure
+  - Memory limits
+  - Garbage collection in V8
+  - Memory leaks in Node.js
+  - Heap snapshots
+
+4. CPU & SCHEDULING
+□ CPU Basics
+  - CPU cores
+  - CPU time
+  - CPU scheduling
+  - Process priority
+  - Time slicing
+
+□ Node.js & CPU
+  - CPU intensive tasks
+  - Clustering in Node.js
+  - PM2 process management
+  - CPU profiling
+  - Performance monitoring
+
+5. I/O OPERATIONS
+□ I/O Fundamentals
+  - Synchronous I/O
+  - Asynchronous I/O
+  - Buffering
+  - Blocking vs Non-blocking I/O
+  - I/O scheduling
+
+□ Node.js I/O
+  - Event-driven I/O
+  - Streams
+  - Buffers
+  - File system operations
+  - Network I/O
+
+6. INTER-PROCESS COMMUNICATION (IPC)
+□ IPC Mechanisms
+  - Pipes
+  - Sockets
+  - Shared memory
+  - Message queues
+  - Signals
+
+□ Node.js IPC
+  - Child processes
+  - Cluster module
+  - Message passing
+  - Socket communication
+  - Process signals
+
+7. FILE SYSTEM
+□ File System Basics
+  - File descriptors
+  - File permissions
+  - File types
+  - Directory structure
+  - Links (soft/hard)
+
+□ Node.js File Operations
+  - fs module
+  - File streams
+  - File watching
+  - File locking
+  - Temporary files
+
+8. SYSTEM RESOURCES
+□ Resource Management
+  - CPU usage
+  - Memory usage
+  - Disk I/O
+  - Network I/O
+  - Resource limits
+
+□ Node.js Resource Handling
+  - Resource monitoring
+  - Memory limits
+  - CPU profiling
+  - Resource optimization
+  - Error handling
+
+9. SECURITY & PERMISSIONS
+□ OS Security
+  - User permissions
+  - Process permissions
+  - File permissions
+  - Security contexts
+  - Access control
+
+□ Node.js Security
+  - Security best practices
+  - Process privileges
+  - File access control
+  - Security modules
+  - Secure configurations
+
+10. MONITORING & DEBUGGING
+□ System Monitoring
+  - Process monitoring
+  - Resource usage
+  - Log files
+  - System metrics
+  - Performance analysis
+
+□ Node.js Monitoring
+  - Application metrics
+  - Debugging tools
+  - Profiling
+  - Logging
+  - Error tracking
+
+=== HOW TO USE THIS LIST ===
+
+For each topic, follow this learning pattern:
+
+1. Basic OS Concept
+   - Theoretical understanding
+   - How it works
+   - Why it's important
+
+2. Node.js Implementation
+   - How Node.js uses it
+   - Practical examples
+   - Common issues
+
+3. Best Practices
+   - Performance optimization
+   - Security considerations
+   - Error handling
+
+4. Debugging & Troubleshooting
+   - Common problems
+   - Debugging tools
+   - Solutions
+
+Learning Order:
+- Start with Process Fundamentals
+- Move through topics sequentially
+- Complete practical exercises for each topic
+- Build sample applications demonstrating concepts

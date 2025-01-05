@@ -1,0 +1,206 @@
+# SECTION 4: DOCKERFILE
+
+## 1. Dockerfile Syntax
+
+### Definition
+A Dockerfile is a text document containing commands to automatically build Docker images. It follows a specific syntax and order of instructions to create a reproducible build process.
+
+### Detailed Explanation
+Each instruction in a Dockerfile creates a new layer in the image. Instructions are executed in order from top to bottom. The syntax is case-insensitive but conventionally uppercase is used for instructions.
+
+### Key Instructions
+- `FROM`: Specifies the base image
+- `WORKDIR`: Sets working directory
+- `COPY/ADD`: Copies files into image
+- `RUN`: Executes commands
+- `CMD/ENTRYPOINT`: Defines default execution
+
+### Practical Example
+```dockerfile
+# Basic Dockerfile structure
+FROM node:16-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+CMD ["node", "app.js"]
+```
+
+## 2. Basic Instructions
+
+### Definition
+Basic instructions are the fundamental commands used to build Docker images, each serving a specific purpose in the image creation process.
+
+### Detailed Explanation
+Each instruction should be purposeful and optimized for caching. Instructions are processed in order, and each creates a new layer in the image.
+
+### Key Instructions Explained
+#### FROM
+- Sets base image
+- Must be first instruction
+- Can use multiple FROM for multi-stage builds
+```dockerfile
+FROM node:16-alpine
+```
+
+#### COPY
+- Copies files from host to image
+- More straightforward than ADD
+- Preferred for simple file copying
+```dockerfile
+COPY package.json .
+COPY . .
+```
+
+#### ADD
+- Similar to COPY but with extra features
+- Can extract compressed files
+- Can download from URLs
+```dockerfile
+ADD archive.tar.gz /usr/src/
+```
+
+#### RUN
+- Executes commands during build
+- Creates new layer
+- Often used for installing dependencies
+```dockerfile
+RUN npm install && \
+    npm cache clean --force
+```
+
+#### CMD
+- Sets default command
+- Can be overridden at runtime
+- Only one CMD effective
+```dockerfile
+CMD ["npm", "start"]
+```
+
+#### ENTRYPOINT
+- Configures container as executable
+- Combines with CMD
+- Harder to override
+```dockerfile
+ENTRYPOINT ["node"]
+CMD ["app.js"]
+```
+
+## 3. Building Images
+
+### Definition
+Building an image is the process of executing a Dockerfile to create a container image that includes all necessary files and configurations.
+
+### Detailed Explanation
+The build process follows the instructions in the Dockerfile, creating layers for each instruction. Each layer is cached and can be reused in subsequent builds if unchanged.
+
+### Key Commands
+- `docker build`: Builds an image from Dockerfile
+- `-t`: Tags the image
+- `--no-cache`: Builds without using cache
+- `-f`: Specifies Dockerfile path
+
+### Practical Example
+```bash
+# Build image with tag
+docker build -t myapp:1.0 .
+
+# Build with specific Dockerfile
+docker build -f Dockerfile.prod -t myapp:prod .
+```
+
+## 4. .dockerignore File
+
+### Definition
+The .dockerignore file specifies which files and directories should be excluded from the Docker build context.
+
+### Detailed Explanation
+Similar to .gitignore, it helps reduce build context size and prevent sensitive files from being copied into the image.
+
+### Common Entries
+```plaintext
+node_modules
+npm-debug.log
+Dockerfile
+.git
+.env
+*.md
+```
+
+## 5. Multi-stage Builds
+
+### Definition
+Multi-stage builds allow you to use multiple FROM statements in your Dockerfile to create smaller production images.
+
+### Detailed Explanation
+Each FROM instruction can use a different base image and starts a new build stage. Files can be copied between stages, allowing you to leave build dependencies behind.
+
+### Practical Example
+```dockerfile
+# Build stage
+FROM node:16 AS builder
+WORKDIR /app
+COPY . .
+RUN npm ci && npm run build
+
+# Production stage
+FROM node:16-alpine
+COPY --from=builder /app/dist ./dist
+CMD ["node", "dist/app.js"]
+```
+
+## 6. Layer Optimization
+
+### Definition
+Layer optimization involves structuring Dockerfile instructions to maximize build cache usage and minimize image size.
+
+### Detailed Explanation
+Each instruction creates a layer. Proper ordering and combining of instructions can significantly reduce the final image size and build time.
+
+### Best Practices
+1. Order instructions from least to most frequently changing
+2. Combine RUN commands using &&
+3. Remove unnecessary files in same layer
+4. Use .dockerignore effectively
+
+### Practical Example
+```dockerfile
+# Optimized layers
+FROM node:16-alpine
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --production && \
+    npm cache clean --force
+
+COPY . .
+CMD ["node", "app.js"]
+```
+
+## Best Practices
+1. Use specific base image tags
+2. Order instructions by change frequency
+3. Minimize number of layers
+4. Use multi-stage builds for production
+5. Keep images small and focused
+6. Document with comments
+
+## Common Pitfalls
+1. Using latest tag
+2. Ignoring build context size
+3. Not cleaning up in same layer
+4. Mixing ENV with build args
+5. Incorrect instruction ordering
+6. Not using .dockerignore
+
+## Key Commands Summary
+```bash
+# Building
+docker build -t name:tag .     # Build image
+docker build --no-cache .      # Build without cache
+docker image prune            # Clean unused images
+
+# Inspecting
+docker history image:tag      # View layer history
+docker image inspect name     # Inspect image details
+```

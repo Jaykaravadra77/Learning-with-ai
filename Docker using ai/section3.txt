@@ -1,0 +1,218 @@
+# SECTION 3: DOCKER IMAGES
+
+## 1. Understanding Docker Images
+
+### Definition
+Docker images are read-only templates used to create containers. They contain everything needed to run an application: code, runtime, libraries, environment variables, and config files.
+
+### Detailed Explanation
+Images are built in layers, each layer representing a change in the filesystem. They are immutable and serve as the basis for containers.
+
+### Key Concepts
+- Base images (like node:16)
+- Image layers
+- Image cache
+- Image size optimization
+
+### Practical Examples
+```bash
+# List all images
+docker images
+
+# Show image sizes
+docker images --format "{{.Repository}}:{{.Tag}} - {{.Size}}"
+
+# Filter images
+docker images node
+```
+
+## 2. Docker Hub
+
+### Definition
+Docker Hub is the official cloud-based registry service for Docker images (hub.docker.com).
+
+### Detailed Explanation
+Works like GitHub for Docker images - store, share, and manage container images.
+
+### Key Features
+- Public/Private repositories
+- Official images
+- Automated builds
+- Team collaboration
+
+### Practical Examples
+```bash
+# Login to Docker Hub
+docker login
+
+# Search for images
+docker search nginx
+
+# Pull official image
+docker pull nginx
+
+# Push to your repository
+docker tag myapp:1.0 username/myapp:1.0
+docker push username/myapp:1.0
+```
+
+## 3. Pulling Images
+
+### Definition
+Process of downloading Docker images from a registry to local machine.
+
+### Image Name Structure
+registry/username/image-name:tag
+Example: docker.io/library/node:16-alpine
+
+### Key Commands
+- docker pull <image>
+- docker pull <image>:<tag>
+- docker pull <registry>/<image>
+
+### Practical Examples
+```bash
+# Pull specific version
+docker pull node:16-alpine
+
+# Pull multiple versions
+docker pull mysql:8.0
+docker pull mysql:5.7
+
+# Pull from different registry
+docker pull mcr.microsoft.com/mssql/server:2019-latest
+
+# View download progress
+docker pull ubuntu --progress=plain
+```
+
+## 4. Image Layers
+
+### Definition
+Images are made up of multiple read-only layers that represent filesystem changes.
+
+### Layer Structure
+- Base layer (OS)
+- Additional layers (dependencies)
+- Application layer
+- Configuration layer
+
+### Key Concepts
+- Layer caching
+- Layer sharing
+- Layer optimization
+
+### Practical Examples
+```bash
+# View image layers
+docker history node:16-alpine
+
+# Inspect layer details
+docker inspect node:16-alpine
+
+# Compare layer sizes
+docker history --no-trunc --format "{{.Size}}: {{.CreatedBy}}" nginx
+
+# View shared layers
+docker image inspect node:16-alpine -f '{{.RootFS.Layers}}'
+```
+
+## 5. Image Tagging
+
+### Definition
+Tags are labels attached to Docker images to identify specific versions or variants.
+
+### Tag Structure
+imagename:tag
+Example: node:16-alpine
+
+### Key Commands
+- docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
+- docker tag mysql:8 mydb:stable
+
+### Practical Examples
+```bash
+# Create multiple tags
+docker pull nginx:latest
+docker tag nginx:latest webserver:1.0
+docker tag nginx:latest webserver:stable
+
+# Tag for different environments
+docker tag myapp:1.0 myapp:production
+docker tag myapp:1.0 myapp:staging
+
+# Tag for Docker Hub
+docker tag myapp:1.0 username/myapp:latest
+
+# List image tags
+docker images | grep webserver
+```
+
+## 6. Image Inspection
+
+### Definition
+Process of examining detailed information about Docker images.
+
+### Key Commands
+- docker inspect <image>
+- docker history <image>
+- docker inspect --format='{{.Config.Env}}' <image>
+
+### Practical Examples
+```bash
+# Basic inspection
+docker inspect nginx:latest
+
+# View environment variables
+docker inspect --format='{{range .Config.Env}}{{println .}}{{end}}' node:16
+
+# Check exposed ports
+docker inspect --format='{{.Config.ExposedPorts}}' nginx
+
+# View creation date
+docker inspect --format='{{.Created}}' ubuntu
+
+# Check image size
+docker inspect --format='{{.Size}}' node:16-alpine
+```
+
+## Best Practices
+1. Use specific image tags
+2. Keep images small
+3. Use official images when possible
+4. Document image sources
+5. Regular security scanning
+6. Clean up unused images
+
+## Common Pitfalls
+1. Using :latest tag
+2. Not cleaning up old images
+3. Ignoring image size
+4. Not using .dockerignore
+5. Pulling untrusted images
+6. Not versioning images properly
+
+## Key Commands Summary
+```bash
+# Image Operations
+docker pull              # Download image
+docker images            # List images
+docker rmi               # Remove image
+docker tag               # Tag image
+docker inspect           # View image details
+docker history           # View layer history
+
+# Image Management
+docker image prune       # Remove unused images
+docker save              # Save image to tar
+docker load              # Load image from tar
+
+# Practical Cleanup Commands
+# Remove all unused images
+docker image prune -a
+
+# Remove images by pattern
+docker images -a | grep "pattern" | awk '{print $3}' | xargs docker rmi
+
+# Save space by removing unused data
+docker system prune -a --volumes
