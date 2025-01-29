@@ -1,0 +1,45 @@
+DHCP (Dynamic Host Configuration Protocol)
+
+1. Real-World Example: Hotel Reception
+   ├── Guest (Device) arrives at hotel (Network)
+   ├── Reception (DHCP Server) assigns:
+   │   ├── Room number (IP Address)
+   │   ├── Room key (Network Access)
+   │   ├── Hotel map (Gateway/Router info)
+   │   └── Local services guide (DNS info)
+   │
+   └── When guest leaves:
+       └── Room becomes available for next guest
+           (IP address returns to pool)
+
+2. Real-World Example: Parking Lot
+   ├── Cars (Devices) enter parking lot (Network)
+   ├── Ticket machine (DHCP) assigns:
+   │   ├── Parking spot number (IP Address)
+   │   ├── Parking duration (Lease Time)
+   │   └── Parking rules (Network Config)
+   │
+   └── When car leaves:
+       └── Spot becomes available for next car
+
+3. Real-World Example: Library
+   ├── Student (Device) enters library (Network)
+   ├── Librarian (DHCP) provides:
+   │   ├── Desk number (IP Address)
+   │   ├── Building access (Network Access)
+   │   ├── Directory info (DNS Servers)
+   │   └── Study time limit (Lease Time)
+   │
+   └── When student leaves:
+       └── Desk available for next student
+
+4. DHCP Process (DORA) Like Restaurant:
+   ├── Discovery: "Any tables available?"
+   ├── Offer: "Yes, table 7 is free"
+   ├── Request: "I'll take table 7"
+   └── Acknowledgment: "Table 7 is yours"
+
+5. Where is DHCP?
+   ├── Home: Inside your Router
+   ├── Office: Dedicated Server
+   └── Public WiFi: Network Controller 

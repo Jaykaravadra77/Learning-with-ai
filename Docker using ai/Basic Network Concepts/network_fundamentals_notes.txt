@@ -1,0 +1,19 @@
+OSI MODEL EXPLAINATION BY REALWORLD EXAMPLES
+
+-EXAMPLE 1:
+Application (7): User writes email in Gmail
+Presentation (6): Email content encrypted
+Session (5): Session established with mail server
+Transport (4): Email broken into TCP segments
+Network (3): Segments routed through IP
+Data Link (2): Frames created with MAC addresses
+Physical (1): Bits transmitted through network cable
+
+-EXAMPLE 2:
+Application (7): User browses a website
+Presentation (6): Website content rendered
+Session (5): Session established with web server
+Transport (4): HTTP request broken into TCP segments
+Network (3): Segments routed through IP
+Data Link (2): Frames created with MAC addresses
+Physical (1): Bits transmitted through network cable
